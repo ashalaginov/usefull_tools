@@ -4,4 +4,4 @@ From time to time I have interesting tasks in automated files processing. Here I
 
 - md5_extension_rename.sh - iteratively renames files in the 'tmp' folder to the format "md5.extension" idependently form data type of rile format
 - XlsxToCSV.sh - converts all Microsoft Office *.xlsx files in the directory to *.csv using libreoffice headless, then removes *.xlsx
-- country_domain_extension.php - prints Country, Domain name and Extension of the domain name. You have to install GeoIP for PHP.
+- country_domain_extension.php - prints country, domain name and extension of top-level domain name. You have to install GeoIP for PHP.

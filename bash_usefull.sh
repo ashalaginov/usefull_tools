@@ -21,3 +21,12 @@ find /folder -type f -exec md5sum {} + | grep '^md5sum_given'
 
 ### Fetch all files following their URLs listed in urlfile file
 cat urlfile | parallel --gnu "wget {}"
+
+### Append all *.txt files in a folder without their headers except the first one.
+awk 'FNR==1 && NR!=1 { while (/^[a-z]/) getline; } 1 {print} ' file*.txt >file_all.txt
+
+### Find all files in the directory 
+find $PWD -maxdepth 1 -type f
+
+### Show only desciption from 'file' output
+file file.sh | awk '{print substr($0, index($0, $2))}'

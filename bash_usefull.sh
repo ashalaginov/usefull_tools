@@ -30,3 +30,6 @@ find $PWD -maxdepth 1 -type f
 
 ### Show only desciption from 'file' output
 file file.sh | awk '{print substr($0, index($0, $2))}'
+
+### Print every 3-th line of the file
+awk 'NR == 1 || NR % 3 == 0' file.txt

@@ -1,0 +1,18 @@
+### Fast fix of large broken MySQL table MYI file:
+myisamchk --silent --force --fast --update-state --key_buffer_size=1G --sort_buffer_size=1G  --parallel-recover --read_buffer_size=16M --write_buffer_size=16M raw.MYI 
+
+### Fast dump/insert of the data from large MySQL TABLE
+mysqldump -uroot -p table  --insert-ignore  --extended-insert --disable-keys --quick  >data.sql
+mysqldump -uroot -p 
+mysql> set autocommit=0; set unique_checks=0; set foreign_key_checks=0;
+mysql> set global net_buffer_length=1000000; set global max_allowed_packet=100000000;
+mysql> LOAD DATA INFILE 'table.data.sql'  INTO TABLE table
+mysql> commit; set unique_checks=1; set foreign_key_checks=1;
+
+### Search for the hash value in MySQL datables of the some string
+SELECT * FROM table WHERE hash_field = MD5('string');
+
+
+
+
+

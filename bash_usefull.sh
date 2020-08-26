@@ -47,6 +47,8 @@ mydumper -B DB -T TABLE -u root -p -t 4 -r 1000000 -d folder/
 myloader -B DB -u root -p -t 4 -q 1000000  -d export
 /usr/local/bin/mydumper -B DB -u root -p -t 4 -r 1000000 -c -L mydumper.log -d folder/
 
+### Print only sections sizes from PE32 header without the first line
+size file.exe awk '{if(NR>1)print $1, " ", $2, " ", $3, " ", $4}' | awk '{if(NR>1)print $1, " ", $2, " ", $3, " ", $4}'
 
 
 

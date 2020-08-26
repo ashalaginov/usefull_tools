@@ -37,3 +37,11 @@ awk 'NR == 1 || NR % 3 == 0' file.txt
 ### Elapsed time for the VirtualBox machine to finish loading
 ps -p $(ps aux | grep virtualbox| grep  VBoxHeadless | awk '{print $2}') -o etimes=
 
+### Speech recognitition from video (lectures etc in English)
+#Download: https://sourceforge.net/projects/cmusphinx/files/Acoustic%20and%20Language%20Models/US%20English/ newest cmusphinx-en-us-....tar.gz and en-70k-....lm.gz
+ffmpeg -i book.mp3 -ar 16000 -ac 1 book.wav
+pocketsphinx_continuous -infile book.wav -hmm cmusphinx-en-us-8khz-5.2 -lm en-70k-0.2.lm     2>pocketsphinx.log >book.txt
+
+###
+
+

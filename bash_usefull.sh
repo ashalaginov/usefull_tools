@@ -42,6 +42,11 @@ ps -p $(ps aux | grep virtualbox| grep  VBoxHeadless | awk '{print $2}') -o etim
 ffmpeg -i book.mp3 -ar 16000 -ac 1 book.wav
 pocketsphinx_continuous -infile book.wav -hmm cmusphinx-en-us-8khz-5.2 -lm en-70k-0.2.lm     2>pocketsphinx.log >book.txt
 
-###
+### Fast export / import of large MySQL databases / tables using mysqldump:
+mydumper -B DB -T TABLE -u root -p -t 4 -r 1000000 -d folder/
+myloader -B DB -u root -p -t 4 -q 1000000  -d export
+/usr/local/bin/mydumper -B DB -u root -p -t 4 -r 1000000 -c -L mydumper.log -d folder/
+
+
 
 

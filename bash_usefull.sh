@@ -33,3 +33,7 @@ file file.sh | awk '{print substr($0, index($0, $2))}'
 
 ### Print every 3-th line of the file
 awk 'NR == 1 || NR % 3 == 0' file.txt
+
+### Elapsed time for the VirtualBox machine to finish loading
+ps -p $(ps aux | grep virtualbox| grep  VBoxHeadless | awk '{print $2}') -o etimes=
+

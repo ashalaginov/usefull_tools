@@ -50,5 +50,6 @@ myloader -B DB -u root -p -t 4 -q 1000000  -d export
 ### Print only sections sizes from PE32 header without the first line
 size file.exe awk '{if(NR>1)print $1, " ", $2, " ", $3, " ", $4}' | awk '{if(NR>1)print $1, " ", $2, " ", $3, " ", $4}'
 
-
+### Convert big PDF to small PDF
+convert -density 150x150 -quality 60 -compress jpeg big.pdf small.pdf
 

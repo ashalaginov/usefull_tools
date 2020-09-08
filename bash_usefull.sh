@@ -53,3 +53,25 @@ size file.exe awk '{if(NR>1)print $1, " ", $2, " ", $3, " ", $4}' | awk '{if(NR>
 ### Convert big PDF to small PDF
 convert -density 150x150 -quality 60 -compress jpeg big.pdf small.pdf
 
+### Find all files in current/sub-folders and remove spaces in the file names
+find . -maxdepth 10 -type f  | rename 's/ /_/g' -f
+
+### Process all files in  current/sub-folders and copy renamed md5 files to a specific directory with forced replacement if exists. Running in parallel with 4 threads
+for i in $(find $PWD -maxdepth 10 -type f); do
+    md5sum  "$i"   | awk '{print  $2  " ../'$(echo "${PWD##*/}")'_md5/" $1}' | xargs -P 4  --no-run-if-empty cp -rf
+done
+
+### Filter specific PE32 files and copy them to a specific directory with replacement if needed. Running in parallel with 4 threads
+#!/bin/sh
+dir=malware1;
+pattern1="PE32 executable (GUI) Intel 80386, for MS Windows"
+pattern2="PE32 executable (DLL) (GUI) Intel 80386, for MS Windows"
+pattern3="PE32 executable (native) Intel 80386, for MS Windows"
+pattern4="PE32 executable (console) Intel 80386, for MS Windows";
+pattern5="PE32 executable (DLL) (console) Intel 80386, for MS Windows"
+cd $dir'_md5';
+for i in $(find $PWD  -type f); do
+    filename=$(basename "$i")
+    file $i | grep  -e "$pattern1" -e "$pattern2"  -e "$pattern3" -e "$pattern4" -e "$pattern5" | awk '{print $1}' | awk '{gsub(/:$/,""); print $filename  " ../'$dir'_PE32/'$filename'" }' | xargs -P 4  --no-run-if-empty cp -rf
+
+

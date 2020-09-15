@@ -75,3 +75,23 @@ for i in $(find $PWD  -type f); do
     file $i | grep  -e "$pattern1" -e "$pattern2"  -e "$pattern3" -e "$pattern4" -e "$pattern5" | awk '{print $1}' | awk '{gsub(/:$/,""); print $filename  " ../'$dir'_PE32/'$filename'" }' | xargs -P 4  --no-run-if-empty cp -rf
 
 
+
+### Move all PE32 files to one folder and other files to another folder. Works well when the number of files is too big >100K in the folder.
+#!/bin/sh
+cd unsorted;
+counter=0;
+for i in *; do
+    counter=$((counter+1));
+    echo "$counter";
+    VAR="file $i | grep PE32 " ;
+    VAR1=$(eval "$VAR") ;
+    len1=${#VAR1};
+    if [ -n "$VAR1" ] && [ "$len1" -gt "1" ] ;
+    then
+    	 echo "$VAR1" | awk '{print $1}' | awk '{gsub(/:$/,""); print $1 " ../PE/" $1}'| xargs mv -f  ;
+    else
+    	echo "other";
+    	file $i | awk '{print $1}' | awk '{gsub(/:$/,""); print $1 " ../other/" $1}' | xargs mv -f ;
+    fi
+done
+

@@ -95,3 +95,5 @@ for i in *; do
     fi
 done
 
+## Download content of a website recursively with all files
+wget --recursive --no-clobber --page-requisites --html-extension --convert-links --restrict-file-names=windows --no-parent website.com

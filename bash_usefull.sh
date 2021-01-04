@@ -97,3 +97,13 @@ done
 
 ## Download content of a website recursively with all files
 wget --recursive --no-clobber --page-requisites --html-extension --convert-links --restrict-file-names=windows --no-parent website.com
+
+## Delete directories with content older than 45 days
+find /var/log/nginx  -type d -mtime +45| while read line; do
+    rm -rf $line;
+done;
+
+## Delete files older than 60 days
+find  /usr/reports -type f -mtime +60 | while read line; do
+    rm -rf $line;
+done;

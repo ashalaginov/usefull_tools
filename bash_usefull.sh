@@ -107,3 +107,14 @@ done;
 find  /usr/reports -type f -mtime +60 | while read line; do
     rm -rf $line;
 done;
+
+
+## Check if 1min loads are greater than 3 and inform through email
+d=`date '+%Y%m%d'`
+h="Hostname"
+m="EMAIL@domain"
+load=$(/usr/bin/uptime |  awk -F'averages:' '{print $2}' | awk -F ',' '{print $1}' | awk -F '.' '{print $1}' | tr -d " ")
+if [ "$load" -gt "3" ];
+then
+    echo "LOADS! 1 min = $load " | /usr/bin/mail -s "System status $h $d" $m
+fi;

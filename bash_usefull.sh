@@ -126,3 +126,7 @@ then
     echo "TEMPERATURE! $temp C" | /usr/bin/mail -s "System status $h $d" $m
 fi;
 
+## Export MySQL table and use maximal compression
+date=`/bin/date +%Y.%m.%d_%H:%M`
+/usr/local/bin/mysqldump DB --user=root  --force --password=PASSWORD > /usr/backup/${date}/DB_${date}.sql --default-character-set=utf8
+/usr/bin/gzip -9 /usr/backup/${date}/DB_${data}.sql

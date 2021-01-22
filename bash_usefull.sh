@@ -118,3 +118,11 @@ if [ "$load" -gt "3" ];
 then
     echo "LOADS! 1 min = $load " | /usr/bin/mail -s "System status $h $d" $m
 fi;
+
+## Check if tempereature is greater than +80C and inform though email
+temp=$(/sbin/sysctl -a | grep tempe |  awk -F':' '{print $2}' | tail -n 1 | tr -d "C\n" | tr -d " " | awk -F'.' '{print $1}')
+if [ "$temp" -gt "80" ];
+then
+    echo "TEMPERATURE! $temp C" | /usr/bin/mail -s "System status $h $d" $m
+fi;
+
